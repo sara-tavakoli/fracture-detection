@@ -83,6 +83,15 @@ python scripts/train.py --experiment fast_dev         # CI smoke recipe
 Each run writes `artifacts/{config.snapshot.yaml, env.json, train.log}`, MLflow
 metrics, and the best checkpoint.
 
+### Train on a free GPU
+
+[`notebooks/kaggle_train.ipynb`](notebooks/kaggle_train.ipynb) is a self-contained
+Kaggle notebook: it clones this repo, installs it, mounts a hosted MURA-v1.1
+mirror, normalises it with `scripts/prepare_mura.py`, runs `--experiment strong`
+at 320&nbsp;px for 30 epochs on a P100, then produces the image/study reports and
+the per-body-part κ plot. Enable **GPU + Internet** in the notebook settings and
+hit *Run All*. (You still need to accept the MURA research-use terms once.)
+
 ## Serving
 
 ```bash
