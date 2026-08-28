@@ -1,0 +1,49 @@
+# Base config. Compose:  python scripts/train.py model=convnext_tiny train.lr=1e-4
+defaults:
+  - data: mura
+  - model: densenet169
+
+seed: 1337
+deterministic: true
+experiment: null
+
+paths:
+  data_dir: data/mura
+  output_dir: artifacts
+  mlflow_uri: file:./mlruns
+
+train:
+  loss: focal              # ce | focal
+  focal_gamma: 1.5
+  label_smoothing: 0.0
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  head_lr_mult: 10.0
+  scheduler: cosine
+  warmup_frac: 0.05
+  max_epochs: 30
+  precision: 16-mixed
+  accumulate_grad_batches: 1
+  gradient_clip_val: 1.0
+  early_stop_patience: 6
+  monitor: val/auroc
+  monitor_mode: max
+  ema:
+    enabled: true
+    decay: 0.9998
+    warmup_steps: 1000
+  mixup:
+    enabled: false          # off by default for X-ray; enable for regularisation
+    mixup_alpha: 0.2
+    cutmix_alpha: 0.0
+    prob: 0.3
+    switch_prob: 0.0
+
+eval:
+  target_sensitivity: 0.95  # operating point for the referral threshold
+
+trainer:
+  devices: auto
+  accelerator: auto
+  log_every_n_steps: 20
+  num_sanity_val_steps: 2

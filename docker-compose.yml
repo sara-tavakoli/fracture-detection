@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      target: runtime
+    image: fracture:latest
+    ports:
+      - "8000:8000"
+    environment:
+      FRACTURE_CKPT: /app/artifacts/best.ckpt
+      FRACTURE_DEVICE: cpu
+      FRACTURE_TTA: "1"
+      FRACTURE_CAM_METHOD: gradcam++
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+    restart: unless-stopped

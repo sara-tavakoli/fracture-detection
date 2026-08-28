@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install ruff mypy
+      - run: ruff check src scripts tests
+      - run: ruff format --check src scripts tests
+      - run: mypy src/fracture
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install (CPU torch)
+        run: |
+          python -m pip install -U pip
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[serve,dev]"
+      - name: Unit tests
+        run: pytest -q --cov=fracture --cov-report=xml -m "not slow"
+      - name: End-to-end smoke (synthetic data)
+        run: |
+          python scripts/make_synthetic_data.py --out data/mura --patients 30 --size 96
+          python scripts/prepare_splits.py --data-dir data/mura
+          python scripts/train.py --experiment fast_dev
+          python scripts/evaluate.py --checkpoint artifacts/best.ckpt --experiment fast_dev --n-bootstrap 100
+          python scripts/export_model.py --checkpoint artifacts/best.ckpt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-artifacts
+          path: artifacts/

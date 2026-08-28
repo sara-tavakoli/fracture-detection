@@ -1,0 +1,9 @@
+# MURA-paper-style baseline: DenseNet-169 + weighted BCE/CE, no MixUp/EMA.
+model:
+  name: densenet169
+train:
+  loss: ce
+  ema:
+    enabled: false
+  mixup:
+    enabled: false

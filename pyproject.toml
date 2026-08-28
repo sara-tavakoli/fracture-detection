@@ -1,0 +1,88 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fracture"
+version = "0.1.0"
+description = "Research-grade musculoskeletal radiograph abnormality/fracture detection with study-level evaluation, calibration, uncertainty and Grad-CAM"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Sara" }]
+keywords = ["deep-learning", "medical-imaging", "radiography", "MURA", "fracture-detection", "explainable-ai"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "pytorch-lightning>=2.4,<2.6",
+    "torchmetrics>=1.4,<1.8",
+    "timm>=1.0.9",
+    "numpy<2.2",
+    "scipy>=1.13",
+    "scikit-learn>=1.4",
+    "pandas>=2.2",
+    "pillow>=10.3",
+    "opencv-python-headless>=4.9",
+    "albumentations>=1.4.10",
+    "grad-cam>=1.5.4",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "omegaconf>=2.3",
+    "mlflow>=2.14",
+    "rich>=13.7",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+serve = ["fastapi>=0.111", "uvicorn[standard]>=0.30", "python-multipart>=0.0.9", "pydicom>=2.4"]
+dev = [
+    "pytest>=8.2",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+    "requests>=2.32",
+    "onnx>=1.16",
+    "onnxruntime>=1.18",
+]
+
+[project.scripts]
+fracture-train = "fracture.cli:train_entry"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fracture = ["py.typed"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+src = ["src", "scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "RUF"]
+ignore = ["B008", "RUF012", "SIM108"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["E402"]
+"tests/*" = ["E402"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+warn_unused_ignores = false
+check_untyped_defs = true
+files = ["src/fracture"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = ["slow: long-running tests (deselect with -m 'not slow')"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]

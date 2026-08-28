@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Fracture Detection: study-level musculoskeletal radiograph abnormality classification with calibration, uncertainty and Grad-CAM"
+abstract: >-
+  A reproducible PyTorch/Lightning pipeline for binary abnormality detection on
+  upper-extremity radiographs (MURA), with patient-disjoint splitting, class-
+  balanced focal loss, study-level probability aggregation, per-body-part Cohen's
+  kappa against radiologist reference, temperature-scaling calibration, MC-dropout
+  and selective-prediction uncertainty, Grad-CAM localisation, and a DICOM-capable
+  FastAPI service.
+type: software
+authors:
+  - given-names: Sara
+    family-names: ""
+version: 0.1.0
+license: MIT
+date-released: 2026-08-28
+keywords:
+  - deep-learning
+  - medical-imaging
+  - radiography
+  - MURA
+  - fracture-detection
+  - model-calibration
+  - uncertainty-quantification
+  - explainable-ai
+references:
+  - type: article
+    title: "MURA: Large Dataset for Abnormality Detection in Musculoskeletal Radiographs"
+    authors:
+      - family-names: Rajpurkar
+        given-names: Pranav
+      - family-names: Irvin
+        given-names: Jeremy
+      - family-names: Bagul
+        given-names: Aarti
+      - family-names: Ding
+        given-names: Daisy
+      - family-names: Duan
+        given-names: Tony
+    year: 2018
+    notes: "MIDL 2018; arXiv:1712.06957"

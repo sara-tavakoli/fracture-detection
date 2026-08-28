@@ -1,0 +1,5 @@
+name: densenet169
+num_classes: 2
+pretrained: true
+drop_rate: 0.2
+drop_path_rate: 0.0

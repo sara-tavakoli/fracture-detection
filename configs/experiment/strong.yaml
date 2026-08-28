@@ -1,0 +1,12 @@
+# Strong recipe: focal + balanced sampler + heavy aug + EMA + light MixUp.
+train:
+  loss: focal
+  focal_gamma: 1.5
+  ema:
+    enabled: true
+  mixup:
+    enabled: true
+    mixup_alpha: 0.1
+data:
+  aug_strength: heavy
+  balanced_sampler: true

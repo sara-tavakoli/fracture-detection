@@ -1,0 +1,5 @@
+name: effnetv2_s
+num_classes: 2
+pretrained: true
+drop_rate: 0.3
+drop_path_rate: 0.2

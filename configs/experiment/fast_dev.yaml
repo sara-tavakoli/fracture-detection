@@ -1,0 +1,19 @@
+seed: 0
+train:
+  max_epochs: 1
+  precision: 32-true
+  ema:
+    enabled: false
+  mixup:
+    enabled: false
+data:
+  batch_size: 8
+  num_workers: 0
+  image_size: 96
+  balanced_sampler: false
+  n_folds: 3
+model:
+  pretrained: false
+  drop_path_rate: 0.0
+trainer:
+  num_sanity_val_steps: 0
