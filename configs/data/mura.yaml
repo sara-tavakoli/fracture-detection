@@ -1,0 +1,13 @@
+name: mura
+data_dir: data/mura
+metadata_csv: metadata.csv
+image_subdir: .
+image_size: 320
+batch_size: 24
+num_workers: 4
+aug_strength: medium
+balanced_sampler: true
+n_folds: 5
+test_fold: 0
+val_fold: 1
+seed: 1337

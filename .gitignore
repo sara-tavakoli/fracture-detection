@@ -10,7 +10,7 @@ venv/
 .env
 
 # data & artifacts
-data/
+/data/
 !data/.gitkeep
 artifacts/
 mlruns/
